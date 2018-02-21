@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+
 import styles from './Person.module.css'
+// import WithClass from '../../../hoc/WithClass'
+import withClass from '../../../hoc/_withClass'
 
 // 1. when the page re-renders/renders the handleDelete is executed
 // 2. the IIFE sets up a reference, then stopped because of a missing event parameter
@@ -24,13 +27,13 @@ class Person extends Component {
   render () {
     console.log('Person.js inside render()')
     return (
-      <div className={styles.Person}>
+      <Fragment>
         <p onClick={this.props.click}> my name is: {this.props.name}, age is: {this.props.age}</p>
         <p>{this.props.children}</p>
         <input onChange={this.props.changed} value={this.props.name} type="text" />
-      </div>
+      </Fragment>
     )
   }
 }
 
-export default Person
+export default withClass(Person, styles.Person)

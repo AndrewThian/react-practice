@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styles from './Cockpit.module.css'
 
 const cockpit = props => {
-  let btnClass = ''
   const assignedClasses = []
+  let btnClass = styles.Button
 
   if (props.persons.length <= 2) {
     assignedClasses.push(styles.red)
@@ -13,20 +13,20 @@ const cockpit = props => {
     assignedClasses.push(styles.bold)
   }
 
-  if (props.displayPersons) {
-    btnClass = styles.Red
+  if (props.showPersons) {
+    btnClass = [styles.Button, styles.Red].join(' ')
   }
 
   return (
-    <div className={styles.Cockpit}>
-      <h1>{props.title}</h1>
+    <Fragment>
+      <h1>{props.appTitle}</h1>
       <p className={assignedClasses.join(' ')}>test dynamic class change</p>
       <button
         className={btnClass}
         onClick={props.clicked}>
         Click me to toggle Persons
       </button>
-    </div>
+    </Fragment>
   )
 }
 

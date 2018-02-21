@@ -1,23 +1,45 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import Person from './Person/Person'
 
-class Persons extends Component {
+class Persons extends PureComponent {
   constructor(props) {
     super(props)
-    console.log('Persons.js inside constructor', props)
+    console.log( 'Persons.js inside constructor', props )
   }
 
   componentWillMount() {
-    console.log('Persons.js inside componentWillMount()')
+    console.log( 'Persons.js inside componentWillMount()' )
   }
 
   componentDidMount() {
-    console.log('Persons.js inside componentDidMount()')
+    console.log( 'Persons.js inside componentDidMount()' )
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log( '[UPDATE Persons.js] Inside componentWillReceiveProps', nextProps );
+    console.log('[UPDATE Persons.js] Inside componentWillReceiveProps', nextProps)
+  }
+
+  // if we have shallow checks(object referencing type) for 
+  // re-rendering our components via shouldComponentUpdate(), 
+  // we can use PureComponnets from the react library
+  // ----------------------------------------------
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('[UPDATE Persons.js] Inside shouldComponentUpdate', nextProps, nextState)
+  //   // check if next incoming props is !equal to this current props
+  //   // use case: if we only depend on a single props to update the component/container
+  //   return nextProps.persons !== this.props.persons || 
+  //     nextProps.changed !== this.props.changed || 
+  //     nextProps.clicked !== this.props.clicked
+  // }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log('[UPDATE Persons.js] Inside componentWillUpdate', nextProps, nextState)
+  }
+
+  componentDidUpdate() {
+    // can call side effects
+    console.log('[UPDATE Persons.js] Inside componentDidUpdate()')
   }
 
   render () {
