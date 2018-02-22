@@ -16,9 +16,9 @@ class App extends PureComponent {
         { name: 'sean', age: 22, id: 2 },
         { name: 'audrey', age: 14, id: 3 }
       ],
-      showPersons: false
+      showPersons: false,
+      toggleClickCounter: 0
     }
-      
   }
 
   componentWillMount() {
@@ -89,8 +89,24 @@ class App extends PureComponent {
   }
  
   togglePersonsHandler = () => {
-    const showPersons = this.state.showPersons
-    this.setState({ showPersons: !showPersons })
+    // const showPersons = this.state.showPersons
+    // set state is an async call from react/js
+    // this works, however if the same handler is called via multiple pages/users
+    // state may get messed up because it's an async call
+    // this following method is called the `this.setState({nextState})`
+    // this.setState({ 
+    //   showPersons: !showPersons,
+    //   tiggleClicked: this.state.toggleClickCounter + 1
+    // })
+    // here's another way to call functional setState,
+    // if you have the danger of state management in other components
+    this.setState( (prevState, props) => {
+      // console.log('prevState:', prevState, 'props:', props)
+      return {
+        showPersons: !prevState.showPersons,
+        toggleClickCounter: prevState.toggleClickCounter + 1
+      }
+    } )
   }
 
   render() {
@@ -119,6 +135,7 @@ class App extends PureComponent {
           showPersons={this.state.showPersons}
           clicked={this.togglePersonsHandler} />
         {/* conditionals only with ternary conditionals */}
+        <p>Toggle counter: {this.state.toggleClickCounter}</p>
         {persons}
       </Fragment>
     )
