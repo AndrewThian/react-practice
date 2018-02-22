@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 
 import styles from './Person.module.css'
 // import WithClass from '../../../hoc/WithClass'
@@ -22,6 +23,9 @@ class Person extends Component {
 
   componentDidMount() {
     console.log('Person.js inside componentDidMount()')
+    if (this.props.position === 0) {
+      this.inputElement.focus()
+    }
   }
 
   render () {
@@ -30,10 +34,23 @@ class Person extends Component {
       <Fragment>
         <p onClick={this.props.click}> my name is: {this.props.name}, age is: {this.props.age}</p>
         <p>{this.props.children}</p>
-        <input onChange={this.props.changed} value={this.props.name} type="text" />
+        <input
+          // refs should only be used in stateful components
+          ref={input => { this.inputElement = input }}
+          onChange={this.props.changed} 
+          value={this.props.name} 
+          type="text" />
       </Fragment>
     )
   }
+}
+
+// propTypes is a js object
+Person.propTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func
 }
 
 export default withClass(Person, styles.Person)
